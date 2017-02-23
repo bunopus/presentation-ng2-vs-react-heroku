@@ -26,6 +26,7 @@ let logger = morgan(function(tokens, req, res) {
 });
 app.use(logger);
 
+app.use(express.static(__dirname + '/public'));
 
 app.post('/vote', (req, res) => {
     let fingerprint = req.headers['fingerprint'];

@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+    <title>Angular 2 vs React poll</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="jquery-3.1.1.min.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+<input id="vote">
+<div id="fp"></div>
+<button type="button" id="btn">Get my fingerprint</button>
+<script src="fingerprint2.min.js"></script>
+<script>
+    $("#btn").on("click", function () {
+        var fp = new Fingerprint2();
+        fp.get(function (result) {
+            $.ajax({
+                url: "/vote",
+                type: "POST",
+                headers: {
+                    "Accept": "application/json; charset=utf-8",
+                    "fingerprint": result
+                },
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({vote: $("#vote").val()}),
+            }).done(function () {
+                $("#fp").text("Yay!");
+            }).fail(function () {
+                $("#fp").text("Nay(");
+            });
+        });
+    });
+</script>
+</body>
+</html>
