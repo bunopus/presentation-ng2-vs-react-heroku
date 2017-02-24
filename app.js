@@ -57,7 +57,7 @@ app.get('/vote', (req, res) => {
         res.sendStatus(401);
         return;
     }
-    db.collection('votes').findOne({user: cookieUserId})
+    db.collection('votes').findOne(_getVoteQuery(cookieUserId))
         .then((result) => {
             res.send({vote: result.vote});
         });
@@ -84,11 +84,16 @@ function insertNewVote(data, res) {
 }
 
 function updateVote(cookieUserId, data, res) {
-    let id = new ObjectID(JSON.parse(cookieUserId));
-    db.collection('votes').updateOne({_id: id}, data)
+    let query = _getVoteQuery(cookieUserId);
+    db.collection('votes').updateOne(query, data)
         .then(() => {
             res.sendStatus(200);
         });
+}
+
+function _getVoteQuery(cookieUserId) {
+    let id = new ObjectID(JSON.parse(cookieUserId));
+    return {_id: id};
 }
 
 MongoClient.connect(dbUrl, (err, database) => {
