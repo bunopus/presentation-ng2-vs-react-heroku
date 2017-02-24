@@ -5,24 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="jquery-3.1.1.min.js"></script>
     <style>
+        body.ng2 {
+            background: red;
+        }
+        body.react {
+            background: blue;
+        }
     </style>
 </head>
 <body>
-<input id="vote">
-<div id="fp"></div>
-<button type="button" id="btn">Get my fingerprint</button>
 <script src="fingerprint2.min.js"></script>
 <script>
+    var voteRes;
+
+    function vote(opinion) {
+        voteRes = opinion;
+        $('body').removeClass().addClass(opinion);
+    }
+
+    function switchVote(opinion) {
+        if(opinion === 'ng2') {
+            return 'react';
+        } else {
+            return 'ng2';
+        }
+    }
+
     $(document).ready(function() {
         $.get('/vote').done(function (result) {
-            $("#fp").text(result);
+            vote(result.vote);
         }).fail(function () {
             $("#fp").text("Nay(");
         });
     });
-    $("#btn").on("click", function () {
+
+    $(document).on("click", function () {
         var fp = new Fingerprint2();
         fp.get(function (result) {
+            var newVote = switchVote(voteRes);
             $.ajax({
                 url: "/vote",
                 type: "POST",
@@ -31,11 +51,11 @@
                     "fingerprint": result
                 },
                 contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({vote: $("#vote").val()}),
+                data: JSON.stringify({vote: newVote}),
             }).done(function () {
-                $("#fp").text("Yay!");
+                vote(newVote);
             }).fail(function () {
-                $("#fp").text("Nay(");
+                // TODO Add error logging
             });
         });
     });
