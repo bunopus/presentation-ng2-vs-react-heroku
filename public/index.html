@@ -13,6 +13,13 @@
 <button type="button" id="btn">Get my fingerprint</button>
 <script src="fingerprint2.min.js"></script>
 <script>
+    $(document).ready(function() {
+        $.get('/vote').done(function (result) {
+            $("#fp").text(result);
+        }).fail(function () {
+            $("#fp").text("Nay(");
+        });
+    });
     $("#btn").on("click", function () {
         var fp = new Fingerprint2();
         fp.get(function (result) {
