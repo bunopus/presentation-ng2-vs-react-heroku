@@ -63,6 +63,16 @@ app.get('/vote', (req, res) => {
         });
 });
 
+app.get('/stats', (req, res) => {
+    db.collection('votes').aggregate(
+        [{$group: {_id: '$vote', count: {$sum: 1}}}], {}, (err, result) => {
+            if (err) {
+                res.status(500).send(err);
+            }
+            res.send(result);
+        });
+});
+
 function _getCookie(req) {
     return req.cookies['ng2-poll-cookie'];
 }
