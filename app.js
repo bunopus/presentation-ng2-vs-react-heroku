@@ -8,7 +8,7 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
 const dbUrl = process.env.MONGO_URL;
-
+const port = process.env.PORT;
 let db;
 
 const USER_COOKIE_NAME = 'ng2-poll-cookie';
@@ -111,8 +111,8 @@ MongoClient.connect(dbUrl, (err, database) => {
         return console.log(err);
     }
     db = database;
-    app.listen(3000, function() {
-        console.log('Example app listening on port 3000!');
+    app.listen(port, function() {
+        console.log('Poll listening on port ' + port);
     });
 });
 
