@@ -5,32 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="jquery-3.1.1.min.js"></script>
     <style>
-        body {
-            background: rgb(213,206,166);
-            background: -moz-radial-gradient(center, ellipse cover, rgba(213,206,166,1) 0%, rgba(201,193,144,1) 40%, rgba(183,173,112,1) 100%);
-            background: -webkit-radial-gradient(center, ellipse cover, rgba(213,206,166,1) 0%,rgba(201,193,144,1) 40%,rgba(183,173,112,1) 100%);
-            background: radial-gradient(ellipse at center, rgba(213,206,166,1) 0%,rgba(201,193,144,1) 40%,rgba(183,173,112,1) 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d5cea6', endColorstr='#b7ad70',GradientType=1 );
-        }
-
-        body.angular {
-            background: rgb(244,198,188);
-            background: -moz-radial-gradient(center, ellipse cover, rgba(244,198,188,1) 0%, rgba(252,201,201,1) 47%, rgba(252,163,133,1) 100%);
-            background: -webkit-radial-gradient(center, ellipse cover, rgba(244,198,188,1) 0%,rgba(252,201,201,1) 47%,rgba(252,163,133,1) 100%);
-            background: radial-gradient(ellipse at center, rgba(244,198,188,1) 0%,rgba(252,201,201,1) 47%,rgba(252,163,133,1) 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4c6bc', endColorstr='#fca385',GradientType=1 );
-        }
-
         .angular #react {
             display: none;
-        }
-
-        body.react {
-            background: rgb(216,239,255);
-            background: -moz-radial-gradient(center, ellipse cover, rgba(216,239,255,1) 0%, rgba(203,235,255,1) 47%, rgba(161,219,255,1) 100%);
-            background: -webkit-radial-gradient(center, ellipse cover, rgba(216,239,255,1) 0%,rgba(203,235,255,1) 47%,rgba(161,219,255,1) 100%);
-            background: radial-gradient(ellipse at center, rgba(216,239,255,1) 0%,rgba(203,235,255,1) 47%,rgba(161,219,255,1) 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d8efff', endColorstr='#a1dbff',GradientType=1 );
         }
 
         .react #angular {
@@ -42,16 +18,11 @@
         }
 
         #loader {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            z-index: 1;
-            margin: -75px 0 0 -75px;
-            border: 16px solid #f3f3f3;
+            border: 10px solid #f3f3f3;
             border-radius: 50%;
-            border-top: 16px solid #3498db;
-            width: 120px;
-            height: 120px;
+            border-top: 10px solid #3498db;
+            width: 50px;
+            height: 50px;
             -webkit-animation: spin 2s linear infinite;
             animation: spin 2s linear infinite;
         }
@@ -66,34 +37,61 @@
             100% { transform: rotate(360deg); }
         }
 
-        #vote {
-            display: none;
+        #container {
             text-align: center;
-            margin: auto;
             position: absolute;
             top: 0; left: 0; bottom: 0; right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgb(213,206,166);
+            background: -moz-radial-gradient(center, ellipse cover, rgba(213,206,166,1) 0%, rgba(201,193,144,1) 40%, rgba(183,173,112,1) 100%);
+            background: -webkit-radial-gradient(center, ellipse cover, rgba(213,206,166,1) 0%,rgba(201,193,144,1) 40%,rgba(183,173,112,1) 100%);
+            background: radial-gradient(ellipse at center, rgba(213,206,166,1) 0%,rgba(201,193,144,1) 40%,rgba(183,173,112,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d5cea6', endColorstr='#b7ad70',GradientType=1 );
         }
 
-        .voted #vote img {
-            margin: auto;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
+        #container.angular {
+            background: rgb(244,198,188);
+            background: -moz-radial-gradient(center, ellipse cover, rgba(244,198,188,1) 0%, rgba(252,201,201,1) 47%, rgba(252,163,133,1) 100%);
+            background: -webkit-radial-gradient(center, ellipse cover, rgba(244,198,188,1) 0%,rgba(252,201,201,1) 47%,rgba(252,163,133,1) 100%);
+            background: radial-gradient(ellipse at center, rgba(244,198,188,1) 0%,rgba(252,201,201,1) 47%,rgba(252,163,133,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4c6bc', endColorstr='#fca385',GradientType=1 );
+        }
+
+        #container.react {
+            background: rgb(216,239,255);
+            background: -moz-radial-gradient(center, ellipse cover, rgba(216,239,255,1) 0%, rgba(203,235,255,1) 47%, rgba(161,219,255,1) 100%);
+            background: -webkit-radial-gradient(center, ellipse cover, rgba(216,239,255,1) 0%,rgba(203,235,255,1) 47%,rgba(161,219,255,1) 100%);
+            background: radial-gradient(ellipse at center, rgba(216,239,255,1) 0%,rgba(203,235,255,1) 47%,rgba(161,219,255,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d8efff', endColorstr='#a1dbff',GradientType=1 );
+        }
+
+        .invisible {
+            display: none;
+        }
+
+        #vote img {
+            margin-right: 50px;
+            margin-left: 50px;
         }
 
     </style>
 </head>
 <body>
-<div id="loader"></div>
-<div style="display:none;" id="vote">
-    <img src="img/angular.png" id="angular" class="logo">
-    <img src="img/react.png" id="react" class="logo">
+<div id="container">
+    <div id="loader"></div>
+    <div id="vote" class=".invisible">
+        <img src="img/angular.png" id="angular" class="logo">
+        <img src="img/react.png" id="react" class="logo">
+    </div>
 </div>
 <script src="fingerprint2.min.js"></script>
 <script>
     var isVoted;
 
     function setOpinionClass(opinion) {
-        $('body').removeClass().addClass(opinion).addClass('voted');
+        $('#container').removeClass().addClass(opinion).addClass('voted');
     }
 
     function switchOpinion(opinion){
@@ -105,15 +103,8 @@
     }
 
     function showLoader(show) {
-        var loader = document.getElementById("loader");
-        var vote = document.getElementById("vote");
-        if (show) {
-            loader.style.display = "block";
-            vote.style.display = "none";
-        } else {
-            loader.style.display = "none";
-            vote.style.display = "block";
-        }
+        $("#loader").toggleClass('invisible', !show);
+        $("#vote").toggleClass('invisible', show);
     }
 
     function vote(opinion) {
