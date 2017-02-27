@@ -53,13 +53,18 @@ app.post('/vote', (req, res) => {
 
 app.get('/vote', (req, res) => {
     let cookieUserId = _getCookie(req);
-    if(!cookieUserId) {
+    if (!cookieUserId) {
         res.sendStatus(401);
         return;
     }
     db.collection('votes').findOne(_getVoteQuery(cookieUserId))
         .then((result) => {
-            res.send({vote: result.vote});
+            if (!result) {
+                res.clearCookie(USER_COOKIE_NAME);
+                res.sendStatus(401);
+            } else {
+                res.send({vote: result.vote});
+            }
         });
 });
 
