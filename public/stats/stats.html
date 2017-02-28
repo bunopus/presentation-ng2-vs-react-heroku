@@ -1,58 +1,13 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<style>
-    .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
-    .summary {
-        font-family: Helvetica;
-        font-weight: bold;
-        width: 500px;
-        color: #7a8b9c;
-        margin-top: 10px;
-    }
-</style>
 <body>
 
 <script src="d3.min.js"></script>
 <script src="liquidFillCauge.js"></script>
 <script src="../jquery-3.1.1.min.js"></script>
-<div id="summary" class="summary"></div>
-<svg id="angular" width="250" height="250"></svg>
-<svg id="react" width="250" height="250"></svg>
-<script language="JavaScript">
-    var angularConfig = liquidFillGaugeDefaultSettings();
-    angularConfig.circleColor = "#c30e2e";
-    angularConfig.textColor = "#c30e2e";
-    angularConfig.waveTextColor = "#FFFFFF";
-    angularConfig.waveColor = "#dd0330";
-    angularConfig.waveAnimateTime = 1000;
-    var angularMeter = loadLiquidFillGauge("angular", 0, angularConfig);
-    var reactConfig = liquidFillGaugeDefaultSettings();
-    reactConfig.circleColor = "#4ab3ce";
-    reactConfig.textColor = "#3e839c";
-    reactConfig.waveTextColor = "#FFFFFF";
-    reactConfig.waveColor = "#53c1de";
-    reactConfig.waveAnimateTime = 1000;
-    var reactMeter = loadLiquidFillGauge("react", 0, reactConfig);
-
-    function updateMeters() {
-        $.get( "/stats", function(data) {
-            var result = {};
-            var totalCount = 0;
-            for (var i = 0; i < data.length; i++) {
-                var key = data[i]['_id'];
-                result[key] = data[i]['count'];
-                totalCount += result[key];
-            }
-            setPercent(angularMeter, result.angular, totalCount);
-            setPercent(reactMeter, result.react, totalCount);
-            $('#summary').text(totalCount);
-            setTimeout(updateMeters, 3000);
-        });
-    }
-    function setPercent(meter, votes, total){
-        var perc = votes? Math.round((votes/total)*100) : 0;
-        meter.update(perc);
-    }
-    updateMeters();
+<script src="poll_stats.js"></script>
+<script>
+let meter = new PollMeter();
+meter.init(100);
 </script>
 </body>
