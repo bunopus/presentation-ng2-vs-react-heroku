@@ -1,0 +1,5 @@
+[submodule "public/presentation"]
+	path = public/presentation
+	url = https://github.com/bunopus/presentation-ng2-vs-react.git
+	ignore = dirty
+
